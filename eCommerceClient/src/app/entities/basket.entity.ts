@@ -3,10 +3,10 @@ import { ProductEntity } from "./product.entity";
 
 export class BasketEntity {
     // Sepetin benzersiz kimliğini temsil eden özellik.
-    id: number = 0;
+    id: string = "";
 
     // Sepetteki ürünün benzersiz kimliğini temsil eden özellik.
-    productId: number = 0;
+    productId: string = "";
 
     // Sepetteki ürünü temsil eden özellik.
     product: ProductEntity = new ProductEntity();

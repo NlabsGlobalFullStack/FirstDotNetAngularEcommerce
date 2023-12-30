@@ -20,5 +20,6 @@ import { NavbarComponent } from './navbar/navbar.component';
   styleUrl: './layout.component.css'
 })
 export class LayoutComponent {
-  // Boş, çünkü bu bileşen sadece düzeni temsil eder.
+  // Bileşenin sayfa başlığını tanımlar.
+  pageTitle = 'Ecommerce Client';
 }

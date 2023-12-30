@@ -2,6 +2,7 @@
 using eCommerceServer.WebApi.DTOs;
 using eCommerceServer.WebApi.Entities;
 using eCommerceServer.WebApi.Repositories;
+using eCommerceServer.WebApi.Services;
 using eCommerceServer.WebApi.Validators;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
@@ -13,17 +14,19 @@ namespace eCommerceServer.WebApi.Controllers;
 /// </summary>
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class AuthController : ControllerBase
+public sealed class AuthController : ControllerBase
 {
     private readonly IMapper _mapper;
+    private readonly IConfiguration _configuration;
 
     /// <summary>
     /// AuthController sınıfının yapıcı metodu.
     /// </summary>
     /// <param name="mapper">Object-to-object mapping işlemlerini sağlayan AutoMapper.</param>
-    public AuthController(IMapper mapper)
+    public AuthController(IMapper mapper, IConfiguration configuration)
     {
         _mapper = mapper;
+        _configuration = configuration;
     }
 
     /// <summary>
@@ -36,7 +39,7 @@ public class AuthController : ControllerBase
         // DTO doğrulamasını gerçekleştirir.
         RegisterDtoValidator validator = new();
         ValidationResult result = validator.Validate(request);
-        if (result.IsValid)
+        if (!result.IsValid)
         {
             List<string> errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
             return BadRequest(errorMessages);
@@ -49,7 +52,7 @@ public class AuthController : ControllerBase
         bool isEmailExist = userRepository.IsEmailExists(request.Email);
         if (isEmailExist)
         {
-            return BadRequest(new { Message = "\r\nE-mail address Try Another E-Mail Address Registered in the System!" });
+            return BadRequest(new { Message = "E-mail address Try Another E-Mail Address Registered in the System!" });
         }
 
         // Kullanıcı adının sistemde kayıtlı olup olmadığını kontrol eder.
@@ -78,7 +81,7 @@ public class AuthController : ControllerBase
         // DTO doğrulamasını gerçekleştirir.
         LoginDtoValidator validator = new();
         ValidationResult result = validator.Validate(request);
-        if (result.IsValid)
+        if (!result.IsValid)
         {
             List<string> errorMessages = result.Errors.Select(e => e.ErrorMessage).ToList();
             return BadRequest(errorMessages);
@@ -95,6 +98,8 @@ public class AuthController : ControllerBase
             return BadRequest(new { Message = "User Not Found!" });
         }
 
-        return Ok(user);
+        JwtProvider jwtProvider = new(_configuration);
+        string token = jwtProvider.CreateToken(user);
+        return Ok(new {AccessToken = token});
     }
 }

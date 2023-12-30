@@ -23,6 +23,7 @@ import { BasketService } from '../../../services/basket.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+  apiUrl: string = "https://localhost:7031/api/Products/";
   // Ürünlerin listesini tutan dizi.
   products: ProductEntity[] = [];
 
@@ -47,9 +48,13 @@ export class HomeComponent {
 
   // Tüm ürünleri almak için HTTP isteği yapar.
   getAllProduct() {
-    this.http.get("assets/db.json").subscribe({
+    this.http.get(this.apiUrl + "GetAll/", {
+      headers: {
+        "Authorization": "Bearer " + this.auth.token
+      }
+    }).subscribe({
       next: (res: any) => {
-        this.products = res.products;
+        this.products = res;
       },
       error: (err: HttpErrorResponse) => {
         console.log(err);

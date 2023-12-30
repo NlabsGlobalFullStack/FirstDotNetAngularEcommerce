@@ -1,6 +1,8 @@
 @eCommerceServer.WebApi_HostAddress = http://localhost:5143
 
-GET {{eCommerceServer.WebApi_HostAddress}}/weatherforecast/
+GET {{eCommerceServer.WebApi_HostAddress}}/Products/GetAll
+Authorization: Bearer CfDJ8HM03LdIurJAspnEgIvCgGvRg4CERoTTGFrsX-2P_XJaCwdzo8bH6DoKZgL51KM_W8Qr1iB8U3XKatYAVMLubrqXJmkPWOATrGudmGEcGINZwl04m1Eue6U-fyYTevKGZG-dSyKPmtaYBbHqSiknhLe07VlUTFgLHDGw1Yd6m5A4N4KFZkj9fB7Ciyfn3YoBanEyXQTqGxOntz_hnVazocL6xONaIThfGmHx3kgLMjG72Vfte8cp0cV89u1cXzkTTapPz2k9yXuCBjgO-Oks49OVRCTETQcdd5vIyV1xJTkKWyGaQOxkImtwDoUqPE1rwA
+
 Accept: application/json
 
 ###

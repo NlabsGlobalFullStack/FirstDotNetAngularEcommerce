@@ -1,30 +1,40 @@
 import { Injectable } from '@angular/core';
+import { LoginResponseEntity } from '../entities/login-response.entity';
+import { jwtDecode } from 'jwt-decode';
+import { DecodeEntity } from '../entities/decode.entity';
 
-// Angular enjekte edilebilir servisleri temsil eden dekoratör.
 @Injectable({
-  // Servisin hangi modül tarafından sağlandığını belirler.
   providedIn: 'root'
 })
 export class AuthService {
-  // Kullanıcının kimlik doğrulamasının durumunu tutan değişken.
   hasAuthenticated: boolean = false;
+  decode: DecodeEntity = new DecodeEntity();
+  token: string = "";
 
-  // AuthService servisinin yapıcı metodu.
-  constructor() { }
-
-  // Kullanıcının kimlik doğrulama durumunu kontrol eden metod.
   isAuthenticated() {
-    // Local storage'tan "response" anahtarına sahip bir değeri alır.
     const responseString = localStorage.getItem("response");
-
-    // Eğer değer varsa, kullanıcı kimlik doğrulaması yapılmıştır.
     if (responseString) {
-      // Kimlik doğrulama durumunu true olarak ayarlar.
+      try{
+        const response = JSON.parse(responseString) as LoginResponseEntity;
+      this.token = response.accessToken;
+      this.decode = jwtDecode(this.token);
+
+      const now = new Date().getTime() / 1000;
+
+      if(now > this.decode.exp){
+        this.hasAuthenticated = false;
+        return false;
+      }
+
       this.hasAuthenticated = true;
       return true;
-    }
-
-    // Eğer değer yoksa, kullanıcı kimlik doğrulaması yapılmamıştır.
+      }catch (error){
+        console.log(error);
+  
+        this.hasAuthenticated = false;
+        return false;      
+      }      
+    }    
     this.hasAuthenticated = false;
     return false;
   }

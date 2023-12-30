@@ -16,6 +16,4 @@ import { RouterOutlet } from '@angular/router';
   template: "<router-outlet></router-outlet>"
 })
 export class AppComponent {
-  // Bileşenin sayfa başlığını tanımlar.
-  pageTitle = 'Ecommerce Client';
 }

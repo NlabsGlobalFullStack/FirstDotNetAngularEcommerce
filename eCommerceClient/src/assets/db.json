@@ -1,42 +1,4 @@
-{
-  "users": [
-    {
-      "id": 1,
-      "email": "admin@admin.com",
-      "password": "1"
-    },
-    {
-      "email": "admin@admin.com",
-      "password": "1",
-      "id": 2
-    }
-  ],
-  "products": [
-    {
-      "id": 1,
-      "name": "Apple",
-      "coverImageUrl": "apple.png",
-      "price": 100
-    },
-    {
-      "id": 2,
-      "name": "Pear",
-      "coverImageUrl": "pear.png",
-      "price": 120
-    },
-    {
-      "id": 3,
-      "name": "Watermelon",
-      "coverImageUrl": "watermelon.png",
-      "price": 200
-    },
-    {
-      "id": 4,
-      "name": "Banana",
-      "coverImageUrl": "banana.png",
-      "price": 300
-    }
-  ],
+{  
   "carts": [
     {
       "id": 1,

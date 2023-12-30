@@ -3,6 +3,12 @@ export class UserEntity {
     // Kullanıcının benzersiz kimliğini temsil eden özellik.
     id: string = "";
 
+    // Kullanıcının adını temsil eden özellik.
+    firstName: string = "";
+
+    // Kullanıcının soyadını temsil eden özellik.
+    lastName: string = "";
+
     // Kullanıcının e-posta adresini temsil eden özellik.
     email: string = "";
 
@@ -11,12 +17,6 @@ export class UserEntity {
 
     // Kullanıcının şifresini temsil eden özellik.
     password: string = "";
-
-    // Kullanıcının adını temsil eden özellik.
-    firstName: string = "";
-
-    // Kullanıcının soyadını temsil eden özellik.
-    lastName: string = "";
 
     // Kullanıcının yönetici (admin) rolüne sahip olup olmadığını temsil eden özellik.
     isAdmin: boolean = false;

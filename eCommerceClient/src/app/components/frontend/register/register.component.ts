@@ -20,7 +20,9 @@ import { Router, RouterLink } from '@angular/router';
   // Bileşenin kullanacağı CSS dosyasının yolunu belirler.
   styleUrl: './register.component.css'
 })
-export class RegisterComponent {
+export class RegisterComponent {  
+  apiUrl: string = "https://localhost:7031/api/Auth/";
+
   // Bileşenin yapıcı metodu.
   constructor(
     private http: HttpClient,
@@ -32,7 +34,7 @@ export class RegisterComponent {
     // Formun geçerli olup olmadığını kontrol eder.
     if(form.valid){
       // HTTP POST isteği yaparak kullanıcıyı kaydeder.
-      this.http.post("", form.value)
+      this.http.post(this.apiUrl + "Register/", form.value)
         .subscribe({
           next: (res: any)=> {
             // Kayıt başarılıysa kullanıcıyı giriş sayfasına yönlendirir.

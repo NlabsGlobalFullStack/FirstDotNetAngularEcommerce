@@ -1,7 +1,7 @@
 // Ürün varlığını temsil eden sınıf.
 export class ProductEntity {
     // Ürünün benzersiz kimliğini temsil eden özellik.
-    id: number = 0;
+    id: string = "";
 
     // Ürünün adını temsil eden özellik.
     name: string = "";

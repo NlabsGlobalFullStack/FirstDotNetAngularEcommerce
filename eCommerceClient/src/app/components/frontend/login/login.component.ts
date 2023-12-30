@@ -21,6 +21,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  apiUrl: string = "https://localhost:7031/api/Auth/";
   // Bileşenin yapıcı metodu.
   constructor(private http: HttpClient, private router: Router){}
 
@@ -29,7 +30,7 @@ export class LoginComponent {
     // Formun geçerli olup olmadığını kontrol eder.
     if(form.valid){
       // HTTP POST isteği yaparak kullanıcıyı giriş yapmış gibi simüle eder.
-      this.http.post("http://localhost:3000/users", form.value)
+      this.http.post(this.apiUrl + "Login/", form.value)
         .subscribe({
           next: (res: any)=> {
             // Giriş başarılıysa kullanıcı bilgilerini local storage'a kaydeder.

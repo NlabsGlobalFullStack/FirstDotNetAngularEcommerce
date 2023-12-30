@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 })
 export class BasketService {
   // Sepet içindeki öğe sayısını tutan değişken.
+  apiUrl: string = "https://localhost:7031/api/Baskets/GetAll/";
   count: number = 0;
 
   // HttpClient servisine bağımlılığı enjekte eden servis yapıcı metodu.
@@ -19,7 +20,7 @@ export class BasketService {
   // Sepet içindeki öğe sayısını almak için API'yi çağıran metod.
   getCount() {
     // HttpClient servisi aracılığıyla belirli bir API'yi çağırır.
-    this.http.get("")
+    this.http.get(this.apiUrl)
       .subscribe({
         // API çağrısı başarılıysa bu blok çalışır.
         next: ((res: any) => {
