@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceServer.WebApi.Context;
 
@@ -11,9 +12,11 @@ using eCommerceServer.WebApi.Context;
 namespace eCommerceServer.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231230214345_updatedProductTable")]
+    partial class updatedProductTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,18 +63,6 @@ namespace eCommerceServer.WebApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("c8243b08-cce0-4c8b-974c-8d567dd0052a"),
-                            Email = "turkmvc@gmail.com",
-                            FirstName = "Cuma",
-                            IsAdmin = true,
-                            LastName = "KÖSE",
-                            Password = "String123",
-                            UserName = "turkmvc"
-                        });
                 });
 
             modelBuilder.Entity("eCommerceServer.WebApi.Entities.Basket", b =>
@@ -170,47 +161,47 @@ namespace eCommerceServer.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e1e4c7df-2a3c-4b38-9e1e-e269880315d8"),
+                            Id = new Guid("6cb4e1b0-a328-4eb4-90da-e3d6147a71e9"),
                             CoverImageUrl = "apple.png",
-                            CreatedDate = new DateTime(2023, 12, 31, 1, 1, 44, 701, DateTimeKind.Local).AddTicks(1437),
+                            CreatedDate = new DateTime(2023, 12, 31, 0, 43, 44, 779, DateTimeKind.Local).AddTicks(9446),
                             Description = "",
                             Name = "Elma",
                             Price = 20m,
-                            Slug = "elma",
-                            UserId = new Guid("c8243b08-cce0-4c8b-974c-8d567dd0052a")
+                            Slug = "",
+                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
-                            Id = new Guid("3027f70c-1e4f-4cad-844e-c8b10e4b1d7e"),
+                            Id = new Guid("e60dc537-2f57-424c-8dd6-27861cff47ff"),
                             CoverImageUrl = "pear.png",
-                            CreatedDate = new DateTime(2023, 12, 31, 1, 1, 44, 701, DateTimeKind.Local).AddTicks(1457),
+                            CreatedDate = new DateTime(2023, 12, 31, 0, 43, 44, 779, DateTimeKind.Local).AddTicks(9471),
                             Description = "",
                             Name = "Armut",
                             Price = 30m,
-                            Slug = "armut",
-                            UserId = new Guid("c8243b08-cce0-4c8b-974c-8d567dd0052a")
+                            Slug = "",
+                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
-                            Id = new Guid("70c97b8b-18c1-472c-83c3-c72c61ba61fc"),
+                            Id = new Guid("44e38f2c-35e3-4c07-9f83-0c4259f50c2f"),
                             CoverImageUrl = "watermelon.png",
-                            CreatedDate = new DateTime(2023, 12, 31, 1, 1, 44, 701, DateTimeKind.Local).AddTicks(1461),
+                            CreatedDate = new DateTime(2023, 12, 31, 0, 43, 44, 779, DateTimeKind.Local).AddTicks(9528),
                             Description = "",
                             Name = "Karpuz",
                             Price = 120m,
-                            Slug = "karpuz",
-                            UserId = new Guid("c8243b08-cce0-4c8b-974c-8d567dd0052a")
+                            Slug = "",
+                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         },
                         new
                         {
-                            Id = new Guid("95028995-63d8-43c1-82e4-8a61e8fe72fb"),
+                            Id = new Guid("4ea7df7b-d0cc-4958-87c4-98e2f812e9c7"),
                             CoverImageUrl = "banana.png",
-                            CreatedDate = new DateTime(2023, 12, 31, 1, 1, 44, 701, DateTimeKind.Local).AddTicks(1464),
+                            CreatedDate = new DateTime(2023, 12, 31, 0, 43, 44, 779, DateTimeKind.Local).AddTicks(9531),
                             Description = "",
                             Name = "Muz",
                             Price = 50m,
-                            Slug = "muz",
-                            UserId = new Guid("c8243b08-cce0-4c8b-974c-8d567dd0052a")
+                            Slug = "",
+                            UserId = new Guid("00000000-0000-0000-0000-000000000000")
                         });
                 });
 #pragma warning restore 612, 618

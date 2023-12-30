@@ -34,11 +34,25 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Product>().Property(p => p.Price).HasColumnType("money");
         modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
 
+        AppUser user = new()
+        {
+            Id = Guid.NewGuid(),
+            FirstName = "Cuma",
+            LastName = "KÖSE",
+            Email = "turkmvc@gmail.com",
+            UserName = "turkmvc",
+            Password = "String123",
+            IsAdmin = true
+        };
+        modelBuilder.Entity<AppUser>().HasData(user);
+
         List<Product> products = new();
         Product product1 = new()
         {
             Id = Guid.NewGuid(),
+            UserId = user.Id,
             Name = "Elma",
+            Slug = "elma",
             Price = 20,
             CoverImageUrl = "apple.png"
         };
@@ -47,7 +61,9 @@ public class AppDbContext : DbContext
         Product product2 = new()
         {
             Id = Guid.NewGuid(),
+            UserId = user.Id,
             Name = "Armut",
+            Slug = "armut",
             Price = 30,
             CoverImageUrl = "pear.png"
         };
@@ -56,7 +72,9 @@ public class AppDbContext : DbContext
         Product product3 = new()
         {
             Id = Guid.NewGuid(),
+            UserId = user.Id,
             Name = "Karpuz",
+            Slug = "karpuz",
             Price = 120,
             CoverImageUrl = "watermelon.png"
         };
@@ -65,7 +83,9 @@ public class AppDbContext : DbContext
         Product product4 = new()
         {
             Id = Guid.NewGuid(),
+            UserId = user.Id,
             Name = "Muz",
+            Slug = "muz",
             Price = 50,
             CoverImageUrl = "banana.png"
         };

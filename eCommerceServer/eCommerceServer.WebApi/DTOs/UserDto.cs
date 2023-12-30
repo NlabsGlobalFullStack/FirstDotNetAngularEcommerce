@@ -5,7 +5,8 @@
 /// </summary>
 public sealed record LoginDto(
     string UserNameOrEmail,
-    string Password);
+    string Password
+);
 
 /// <summary>
 /// Kullanıcının kayıt bilgilerini temsil eden DTO sınıfı.
@@ -15,4 +16,5 @@ public sealed record RegisterDto(
     string LastName,
     string Email,
     string UserName,
-    string Password);
+    string Password
+);
