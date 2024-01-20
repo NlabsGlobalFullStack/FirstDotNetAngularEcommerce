@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "/bvuoaT6Am0gpG3tAFRUlzqxbjhphNO7//RvjfX8i6s=",
-  "Source": "eCommerceServer.WebApi",
-  "BasePath": "_content/eCommerceServer.WebApi",
+  "Hash": "sfdJK51G4yBjz4J/Jvt5sYfcxAadX16hNfSIrSs/Yxg=",
+  "Source": "ECommerceServer.WebApi",
+  "BasePath": "_content/ECommerceServer.WebApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

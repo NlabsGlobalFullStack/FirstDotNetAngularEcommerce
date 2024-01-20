@@ -1,30 +1,23 @@
-﻿using eCommerceServer.WebApi.Entities;
+﻿using ECommerceServer.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace eCommerceServer.WebApi.Context;
+namespace ECommerceServer.WebApi.Context;
 
-/// <summary>
-/// Uygulamanın veritabanı bağlamını temsil eden DbContext sınıfı.
-/// </summary>
-public class AppDbContext : DbContext
+public sealed class AppDbContext : DbContext
 {
-    /// <summary>
-    /// DbContext sınıfının yapılandırılmasını sağlar.
-    /// </summary>
-    /// <param name="optionsBuilder">DbContext seçenekleri için kullanılan seçenek oluşturucu.</param>
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    public AppDbContext(DbContextOptions options) : base(options)
     {
-        // Veritabanı bağlantı dizesini ayarla (Örnek: optionsBuilder.UseSqlServer("YourConnectionString");).
-        optionsBuilder.UseSqlServer("Data Source=SERVER;Initial Catalog=IEAFullStackEcommerceDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
     }
 
-    /// <summary>
-    /// Uygulama kullanıcılarına erişim sağlayan DbSet.
-    /// </summary>
     public DbSet<AppUser> Users { get; set; }
     public DbSet<Product> Products { get; set; }
+    public DbSet<ShoppingCart> ShoppingCarts { get; set; }
     public DbSet<Order> Orders { get; set; }
-    public DbSet<Basket> Baskets { get; set; }
+    public DbSet<OrderDetail> OrderDetails { get; set; }
+    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<TransactionDetail> TransactionDetails { get; set; }
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -34,25 +27,22 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Product>().Property(p => p.Price).HasColumnType("money");
         modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
 
-        AppUser user = new()
-        {
-            Id = Guid.NewGuid(),
-            FirstName = "Cuma",
-            LastName = "KÖSE",
-            Email = "turkmvc@gmail.com",
-            UserName = "turkmvc",
-            Password = "String123",
-            IsAdmin = true
-        };
-        modelBuilder.Entity<AppUser>().HasData(user);
+        //AppUser user = new()
+        //{
+        //    FirstName = "Cuma",
+        //    LastName = "KÖSE",
+        //    Email = "admin@admin.com",
+        //    UserName = "admin",
+        //    Password = "admin",
+        //    IsAdmin = true
+        //};
+        //modelBuilder.Entity<AppUser>().HasData(user);
 
         List<Product> products = new();
         Product product1 = new()
         {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            Name = "Elma",
-            Slug = "elma",
+            Name = "Apple",
+            Slug = "apple",
             Price = 20,
             CoverImageUrl = "apple.png"
         };
@@ -60,10 +50,8 @@ public class AppDbContext : DbContext
 
         Product product2 = new()
         {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            Name = "Armut",
-            Slug = "armut",
+            Name = "Pear",
+            Slug = "pear",
             Price = 30,
             CoverImageUrl = "pear.png"
         };
@@ -71,10 +59,8 @@ public class AppDbContext : DbContext
 
         Product product3 = new()
         {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            Name = "Karpuz",
-            Slug = "karpuz",
+            Name = "Watermelon",
+            Slug = "watermelon",
             Price = 120,
             CoverImageUrl = "watermelon.png"
         };
@@ -82,10 +68,8 @@ public class AppDbContext : DbContext
 
         Product product4 = new()
         {
-            Id = Guid.NewGuid(),
-            UserId = user.Id,
-            Name = "Muz",
-            Slug = "muz",
+            Name = "Banana",
+            Slug = "banana",
             Price = 50,
             CoverImageUrl = "banana.png"
         };

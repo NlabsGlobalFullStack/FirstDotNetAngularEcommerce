@@ -1,0 +1,68 @@
+<nav class="navbar bg-dark navbar-expand-lg bg-body-tertiary mt-3" data-bs-theme="dark" style="border-radius: 10px;">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">      
+      <img src="/assets/logo.png" style="height: 40px; border-radius: 50%;" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <button class="btn btn-outline-warning active me-1" aria-current="page" routerLink="/">
+            <i class="fa-solid fa-house fa-fade"></i>
+            Home
+          </button>
+        </li>
+        <li class="nav-item">
+          <button class="btn btn-outline-light" routerLink="orders">
+            <i class="fa-solid fa-file fa-fade me-1"></i>
+            Siparişlerim
+          </button>
+        </li>
+      </ul>
+
+      
+      <ul class="navbar-nav me-1 mb-2 mb-lg-0 float-end">
+        <li class="nav-item">
+          <button class="btn btn-outline-light me-1" routerLink="/shopping-carts">
+            <i class="fa-solid fa-cart-plus fa-fade me-1"></i>
+            Sepet
+          </button>
+        </li>
+        
+        <div class="dropdown">
+          <a
+            href="#"
+            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+            id="dropdownUser1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <img
+              src="/assets/logo.png"
+              alt=""
+              width="32"
+              height="32"
+              class="rounded-circle me-2"
+            />
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-dark text-small shadow"
+            aria-labelledby="dropdownUser1"
+          >              
+            <li><strong class="dropdown-item">IEA ADMIN</strong></li>
+            <li><button class="dropdown-item" routerLink="/dashboard">Dashboard</button></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><button class="dropdown-item" routerLink="/login">
+                <i class="fa-solid fa-power-off fa-flip"></i>
+                Sign out
+              </button>
+            </li>
+          </ul>
+        </div>          
+      </ul>
+
+    </div>
+  </div>
+</nav>

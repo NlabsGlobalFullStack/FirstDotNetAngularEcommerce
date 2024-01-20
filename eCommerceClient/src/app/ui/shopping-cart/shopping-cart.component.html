@@ -1,0 +1,52 @@
+<title>{{pageTitle}}</title>
+<div class="d-flex justify-content-between bg-warning px-2 pt-2 mt-1 text-black"  style="border-radius: 10px;">
+    <h4>{{title}}</h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb float-end">
+        <li class="breadcrumb-item" aria-current="page">Home</li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>{{title}}</strong></li>
+      </ol>
+    </nav>
+</div>
+<hr>
+  
+<div class="row">
+    <div class="col-9">
+            <div class="card mt-1">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <img src="assets/images/apple.png" alt="" width="100">
+                    <h5>Apple</h5>
+                    <div class="d-flex mt-2">
+                        <button class="btn btn-dark w-100">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <span class="ms-2 me-2" style="font-size: 25px; border: 1px solid; padding: 0px 15px; border-radius: 10px;">
+                            5
+                        </span>
+                        <button class="btn btn-danger w-100">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                    </div>
+                    <h4>
+                        {{5 | trCurrency:'₺':true}}
+                    </h4>
+                    <i class="fa-solid fa-trash text-danger cursor"></i>
+                </div>                   
+            </div>    
+    </div>
+    <div class="col-3">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="alert alert-dark text-center">
+                    {{500 | trCurrency :'₺':true }}
+                </h1>
+            </div>
+            <div class="card-body">
+                <button class="btn btn-dark w-100">
+                    <i class="fa-solid fa-credit-card me-1"></i>
+                    Ödeme Yap
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

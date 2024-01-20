@@ -1,38 +1,32 @@
-﻿using eCommerceServer.WebApi.Context;
-using eCommerceServer.WebApi.DTOs;
-using eCommerceServer.WebApi.Entities;
-using System.Text.RegularExpressions;
+﻿using ECommerceServer.WebApi.Context;
+using ECommerceServer.WebApi.DTOs;
+using ECommerceServer.WebApi.Models;
 
-namespace eCommerceServer.WebApi.Repositories;
+namespace ECommerceServer.WebApi.Repositories;
 
 public class ProductRepository
 {
-    private readonly AppDbContext context;
-    public ProductRepository()
+    private readonly AppDbContext _context;
+
+    public ProductRepository(AppDbContext context)
     {
-        context = new();
+        _context = context;
     }
 
     private string GenerateSlug(string input)
     {
         string slug = input.ToLowerInvariant();
         slug = slug.Replace(" ", "-");
-        slug = RemoveSpecialCharacters(slug);
         return slug;
     }
 
-    private string RemoveSpecialCharacters(string input)
-    {
-        Regex regex = new Regex("[^a-z0-9]");
-        return regex.Replace(input, "");
-    }
-
-    public Product CreateProductFromRequest(AddProductDto request)
+    private Product CreateProductFromRequest(AddProductDto request)
     {
         string slug = GenerateSlug(request.Name);
 
         Product product = new Product()
         {
+            UserId = request.UserId,
             Name = request.Name,
             Slug = slug,
             Description = request.Description,
@@ -43,31 +37,44 @@ public class ProductRepository
         return product;
     }
 
+    private Product UpdateProductFromRequest(UpdateProductDto request)
+    {
+        string slug = GenerateSlug(request.Name);
+
+        var product = _context.Products.Find(request.Id);
+
+        if (product != null)
+        {
+            product.UserId = request.UserId;
+            product.Name = request.Name;
+            product.Slug = slug;
+            product.Description = request.Description;
+            product.Price = request.Price;
+            product.CoverImageUrl = request.CoverImageUrl;
+        }
+
+        return product;
+    }
+
     public void Add(AddProductDto request)
     {
         Product product = CreateProductFromRequest(request);
-        Add(product);
-    }
-
-    public void Add(Product product)
-    {
-        context.Products.Add(product);
-        context.SaveChanges();
+        _context.Products.Add(product);
+        _context.SaveChanges();
     }
 
     public bool IsNameExists(string name)
     {
-        return context.Products.Any(p => p.Name == name);
+        return _context.Products.Any(p => p.Name == name);
     }
 
-    public void Update(Product product)
+    public void Update(UpdateProductDto request)
     {
-        context.Products.Update(product);
-        context.SaveChanges();
-    }
+        Product product = UpdateProductFromRequest(request);
 
-    public void Remove(Product product)
-    {
-        context.Products.Remove(product);
+        if (product != null)
+        {
+            _context.SaveChanges();
+        }
     }
 }

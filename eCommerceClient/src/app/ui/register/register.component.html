@@ -1,0 +1,40 @@
+<title>{{pageTitle}}</title>
+<div class="d-flex justify-content-center align-items-center" style="height: 82vh;">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-header">
+                <h1>Kayıt Sayfası</h1>
+                <p>Kayıt olmak için bilgilerinizi doldurun</p>
+            </div>
+            <form autocomplete="off">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="email">FirstName</label>
+                        <input type="text" required minlength="3" class="form-control" name="firstName" id="firstName">
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="email">Lastname</label>
+                        <input type="text" required minlength="3" class="form-control" name="lastname" id="Lastname">
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="email">Email</label>
+                        <input type="email" required minlength="3" email class="form-control" name="email" id="email">
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="password">Password</label>
+                        <input type="password" required class="form-control" name="password" id="password">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-danger w-100">Kayıt ol</button>
+                    </div>
+                </div>
+            </form>            
+            <div class="card-footer">
+                <div class="form-group">
+                    <strong>Zaten hesabınız var mı?</strong>
+                    <a class="btn btn-outline-dark mb-1 float-end" routerLink="/login"> Giriş Yapın!</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

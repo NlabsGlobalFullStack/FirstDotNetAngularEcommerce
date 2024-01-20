@@ -1,0 +1,11 @@
+.panelButton{
+    border: 1px solid white;
+    border-radius: 5%; 
+    font-weight: bold; 
+    background-color: rgb(7, 54, 54);
+    font-size: 14px;
+}
+.panelButton:hover{
+    background-color: rgb(6, 135, 139); 
+    color: wheat;
+}

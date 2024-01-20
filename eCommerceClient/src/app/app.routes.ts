@@ -1,32 +1,29 @@
 import { Routes } from '@angular/router';
-import { LayoutComponent } from './components/frontend/layout/layout.component';
-import { HomeComponent } from './components/frontend/home/home.component';
-import { OrderComponent } from './components/frontend/order/order.component';
-import { BasketComponent } from './components/frontend/basket/basket.component';
-import { LoginComponent } from './components/frontend/login/login.component';
-import { RegisterComponent } from './components/frontend/register/register.component';
-import { NotFoundComponent } from './components/frontend/not-found/not-found.component';
-import { AdminLayoutComponent } from './components/dashboard/admin-layout/admin-layout.component';
-import { AdminHomeComponent } from './components/dashboard/admin-home/admin-home.component';
-import { AdminNotFoundComponent } from './components/dashboard/admin-not-found/admin-not-found.component';
+import { LayoutComponent } from './ui/layout/layout.component';
+import { HomeComponent } from './ui/home/home.component';
+import { ShoppingCartComponent } from './ui/shopping-cart/shopping-cart.component';
+import { OrderComponent } from './ui/order/order.component';
+import { LoginComponent } from './ui/login/login.component';
+import { RegisterComponent } from './ui/register/register.component';
+import { DashboardLayoutComponent } from './ui/layout/dashboard-layout/dashboard-layout.component';
+import { DhomeComponent } from './ui/dashboard/dhome/dhome.component';
 
 export const routes: Routes = [
-    // Ana sayfa rotası
     {
         path: "",
         component: LayoutComponent,
-        children:[
+        children: [
             {
                 path: "",
                 component: HomeComponent
             },
             {
-                path: "orders",
-                component: OrderComponent
+                path: "shopping-carts",
+                component: ShoppingCartComponent
             },
             {
-                path: "baskets",
-                component: BasketComponent
+                path: "orders",
+                component: OrderComponent
             },
             {
                 path: "login",
@@ -35,25 +32,16 @@ export const routes: Routes = [
             {
                 path: "register",
                 component: RegisterComponent
-            },
-            {
-                path: "**",
-                component: NotFoundComponent
             }
         ]
-    },
-    // Admin sayfa rotası
+    },    
     {
         path: "dashboard",
-        component: AdminLayoutComponent,
-        children:[
+        component: DashboardLayoutComponent,
+        children: [
             {
-                path: "dashboard",
-                component: AdminHomeComponent
-            },
-            {
-                path: "**",
-                component: AdminNotFoundComponent
+                path: "",
+                component: DhomeComponent
             }
         ]
     }

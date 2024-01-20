@@ -1,53 +1,53 @@
-// IoC Container (Inversion of Control) kullanýmý. Servis baðýmlýlýklarýný yönetir.
-using eCommerceServer.WebApi.Context;
+using ECommerceServer.WebApi.Context;
+using ECommerceServer.WebApi.Options;
+using ECommerceServer.WebApi.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.Reflection;
 using System.Text;
 
-// Web uygulamasýnýn temelini oluþturur.
 var builder = WebApplication.CreateBuilder(args);
 
-// CORS (Cross-Origin Resource Sharing) ayarlarýný ekler.
+builder.Services.Configure<Jwt>(builder.Configuration.GetSection("Jwt"));// options patttern
+
+builder.Services.ConfigureOptions<JwtSetupOptions>();
+
 builder.Services.AddCors(corsService =>
 {
-    corsService.AddDefaultPolicy(policy =>
+    corsService.AddDefaultPolicy(corsPolicy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+        corsPolicy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     });
 });
 
-// Veritabaný baðlantý dizesini alýr.
-//string? connectionString = builder.Configuration.GetConnectionString("SqlServer");
+builder.Services.AddScoped<JwtProvider>();
+builder.Services.AddScoped<AuthService>();
 
-// DbContext için baðlantýyý yapýlandýrýr ve servislere ekler.
-//builder.Services.AddDbContext<AppDbContext>(options =>
-//{
-//    options.UseSqlServer(connectionString);
-//});
+string? dbConnectionString = builder.Configuration.GetConnectionString("SqlServer");
 
-// AutoMapper'ý ekler ve mevcut uygulama derlemesini tarar.
+builder.Services.AddDbContext<AppDbContext>(dbContextOptions =>
+{
+    dbContextOptions.UseSqlServer(dbConnectionString);
+});
+
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
-// Web API kontrolcülerini ekler.
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 
-// API keþfini ve Swagger UI'yi etkinleþtirir.
 builder.Services.AddSwaggerGen(setup =>
 {
-    var jwtSecurityScheme = new OpenApiSecurityScheme
+    var jwtSecuritySheme = new OpenApiSecurityScheme
     {
         BearerFormat = "JWT",
         Name = "JWT Authentication",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = JwtBearerDefaults.AuthenticationScheme,
-        Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
+        Description = "Put **_ONLY_** yourt JWT Bearer token on textbox below!",
 
         Reference = new OpenApiReference
         {
@@ -56,13 +56,14 @@ builder.Services.AddSwaggerGen(setup =>
         }
     };
 
-    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
+    setup.AddSecurityDefinition(jwtSecuritySheme.Reference.Id, jwtSecuritySheme);
 
     setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-        { jwtSecurityScheme, Array.Empty<string>() }
-    });
+                {
+                    { jwtSecuritySheme, Array.Empty<string>() }
+                });
 });
+
 
 builder.Services.AddAuthentication().AddJwtBearer(options =>
 {
@@ -78,10 +79,9 @@ builder.Services.AddAuthentication().AddJwtBearer(options =>
     };
 });
 
-// Uygulamanýn temelini oluþturur.
 var app = builder.Build();
 
-// Uygulama geliþtirme ortamýnda çalýþýyorsa Swagger ve Swagger UI'yi kullanýr.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -90,11 +90,22 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors();
 
-// HTTPS yönlendirmesini etkinleþtirir.
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next(context);
+    }
+    catch (Exception ex)
+    {
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = 500;
+        await context.Response.WriteAsync(JsonConvert.SerializeObject(new { ErrorMessage = ex.Message }));
+    }
+});
+
 app.UseHttpsRedirection();
 
-// Kontrolcü eþlemesini yapýlandýrýr ve API endpoint'lerini eþler.
 app.MapControllers();
 
-// Uygulamayý çalýþtýrýr.
 app.Run();

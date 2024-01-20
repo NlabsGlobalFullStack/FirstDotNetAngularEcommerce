@@ -1,20 +1,17 @@
-﻿namespace eCommerceServer.WebApi.DTOs;
+﻿namespace ECommerceServer.WebApi.DTOs;
 
-/// <summary>
-/// Kullanıcının giriş bilgilerini temsil eden DTO sınıfı.
-/// </summary>
 public sealed record LoginDto(
     string UserNameOrEmail,
-    string Password
-);
+    string Password,
+    bool RememberMe);
 
-/// <summary>
-/// Kullanıcının kayıt bilgilerini temsil eden DTO sınıfı.
-/// </summary>
 public sealed record RegisterDto(
     string FirstName,
     string LastName,
     string Email,
     string UserName,
-    string Password
-);
+    string Password);
+
+public sealed record LoginResponseDto(
+    string AccessToken,
+    Guid UserId);

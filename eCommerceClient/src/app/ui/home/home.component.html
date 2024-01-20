@@ -1,0 +1,74 @@
+<title>{{pageTitle}}</title>
+<div class="d-flex justify-content-between bg-warning px-2 pt-2 mt-1 text-black"  style="border-radius: 10px;">
+    <h4>{{title}}</h4>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb float-end">
+        <li class="breadcrumb-item" aria-current="page">Home</li>
+        <li class="breadcrumb-item active" aria-current="page"><strong>{{title}}</strong></li>
+      </ol>
+    </nav> 
+</div>
+<hr>
+  
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">                
+                <img src="/assets/images/product/apple.png" style="width: 100%;" alt="...">
+            </div>
+            <div class="card-header text-center">                
+                <h5 class="card-title">Apple</h5>
+            </div>
+            <div class="card-header text-center">                
+                <p class="card-text">{{5000 | trCurrency: '₺': true}}</p>
+                <button class="btn btn-dark w-100">Sepete Ekle</button>
+            </div>
+          </div>
+    </div>
+    
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">                
+                <img src="/assets/images/product/pear.png" style="width: 100%;" alt="...">
+            </div>
+            <div class="card-header text-center">                
+                <h5 class="card-title">Pear</h5>
+            </div>
+            <div class="card-header text-center">            
+                <p class="card-text">{{5000 | trCurrency: '₺': true}}</p>
+                <button class="btn btn-dark w-100">Sepete Ekle</button>
+            </div>
+          </div>
+    </div>
+
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">                
+                <img src="/assets/images/product/watermelon.png" style="width: 100%;" alt="...">
+            </div>
+            <div class="card-header text-center">                
+                <h5 class="card-title">Watermelon</h5>
+            </div>
+            <div class="card-header text-center">       
+                <p class="card-text">{{5000 | trCurrency: '₺': true}}</p>
+                <button class="btn btn-dark w-100">Sepete Ekle</button>
+            </div>
+          </div>
+    </div>
+
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">                
+                <img src="/assets/images/product/banana.png" style="width: 100%;" alt="...">
+            </div>
+            <div class="card-header text-center">                
+                <h5 class="card-title">Banana</h5>
+            </div>
+            <div class="card-header text-center">      
+                <p class="card-text">{{5000 | trCurrency: '₺': true}}</p>
+                <button class="btn btn-dark w-100">Sepete Ekle</button>
+            </div>
+          </div>
+    </div>
+
+</div>
