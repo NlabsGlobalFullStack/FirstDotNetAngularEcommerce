@@ -2,13 +2,13 @@
 using ECommerceServer.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceServer.WebApi.Repositories;
+namespace ECommerceServer.WebApi.Services;
 
-public class ShoppingCartReposiyory
+public sealed class ShoppingCartService
 {
     private readonly AppDbContext _context;
 
-    public ShoppingCartReposiyory(AppDbContext context)
+    public ShoppingCartService(AppDbContext context)
     {
         _context = context;
     }

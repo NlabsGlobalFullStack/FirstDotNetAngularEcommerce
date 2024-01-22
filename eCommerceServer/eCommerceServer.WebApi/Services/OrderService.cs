@@ -2,13 +2,13 @@
 using ECommerceServer.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceServer.WebApi.Repositories;
+namespace ECommerceServer.WebApi.Services;
 
-public class OrderRepository
+public sealed class OrderService
 {
     private readonly AppDbContext _context;
 
-    public OrderRepository(AppDbContext context)
+    public OrderService(AppDbContext context)
     {
         _context = context;
     }

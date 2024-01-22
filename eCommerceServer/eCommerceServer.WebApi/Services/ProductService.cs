@@ -2,15 +2,20 @@
 using ECommerceServer.WebApi.DTOs;
 using ECommerceServer.WebApi.Models;
 
-namespace ECommerceServer.WebApi.Repositories;
+namespace ECommerceServer.WebApi.Services;
 
-public class ProductRepository
+public sealed class ProductService
 {
     private readonly AppDbContext _context;
 
-    public ProductRepository(AppDbContext context)
+    public ProductService(AppDbContext context)
     {
         _context = context;
+    }
+
+    public IEnumerable<Product> GetAll()
+    {
+        return _context.Products.OrderBy(p => p.CreatedDate).ToList();
     }
 
     private string GenerateSlug(string input)
@@ -26,7 +31,7 @@ public class ProductRepository
 
         Product product = new Product()
         {
-            UserId = request.UserId,
+            SellerId = request.UserId,
             Name = request.Name,
             Slug = slug,
             Description = request.Description,
@@ -45,7 +50,7 @@ public class ProductRepository
 
         if (product != null)
         {
-            product.UserId = request.UserId;
+            product.SellerId = request.UserId;
             product.Name = request.Name;
             product.Slug = slug;
             product.Description = request.Description;

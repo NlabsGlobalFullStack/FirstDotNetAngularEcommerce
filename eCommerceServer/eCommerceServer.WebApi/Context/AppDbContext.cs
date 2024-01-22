@@ -27,16 +27,6 @@ public sealed class AppDbContext : DbContext
         modelBuilder.Entity<Product>().Property(p => p.Price).HasColumnType("money");
         modelBuilder.Entity<Product>().HasIndex(u => u.Name).IsUnique();
 
-        //AppUser user = new()
-        //{
-        //    FirstName = "Cuma",
-        //    LastName = "KÖSE",
-        //    Email = "admin@admin.com",
-        //    UserName = "admin",
-        //    Password = "admin",
-        //    IsAdmin = true
-        //};
-        //modelBuilder.Entity<AppUser>().HasData(user);
 
         List<Product> products = new();
         Product product1 = new()

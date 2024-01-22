@@ -3,7 +3,6 @@
 public sealed class Product : BaseModel
 {
     public Guid SellerId { get; set; }
-    public Seller? Seller { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Slug { get; set; } = string.Empty;
     public string Keywords { get; set; } = string.Empty; // SEO Keys

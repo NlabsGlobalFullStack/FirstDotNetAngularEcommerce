@@ -139,3 +139,4 @@ C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECo
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.pdb
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.genruntimeconfig.cache
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ref\ECommerceServer.WebApi.dll
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Newtonsoft.Json.dll

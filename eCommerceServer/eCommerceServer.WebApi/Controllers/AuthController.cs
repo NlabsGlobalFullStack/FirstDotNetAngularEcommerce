@@ -17,15 +17,37 @@ public class AuthController : ControllerBase
     [HttpPost]
     public IActionResult Register(RegisterDto request)
     {
-        _authService.Register(request);
-
-        return NoContent();
+        try
+        {
+            _authService.Register(request);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(422, ex.Message);
+        }
+        catch
+        {
+            // Loglama yapılabilir
+            return StatusCode(500, "Internal Server Error");
+        }
     }
 
     [HttpPost]
     public IActionResult Login(LoginDto reques) 
     {
-        var response = _authService.Login(reques);
-        return Ok(response);
+        try
+        {
+            var response = _authService.Login(reques);
+            return Ok(response);
+        }
+        catch (AuthenticationException ex)
+        {
+            return StatusCode(422, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Internal Server Error" + ex.Message);
+        }
     }
 }

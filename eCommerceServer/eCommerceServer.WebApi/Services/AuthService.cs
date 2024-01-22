@@ -1,78 +1,112 @@
-﻿using ECommerceServer.WebApi.Context;
+﻿using AutoMapper;
+using ECommerceServer.WebApi.Context;
 using ECommerceServer.WebApi.DTOs;
 using ECommerceServer.WebApi.Models;
 using ECommerceServer.WebApi.Validators;
+using FluentValidation.Results;
 
 namespace ECommerceServer.WebApi.Services;
+
+public class AuthenticationException : Exception
+{
+    public int StatusCode { get; }
+    public string ErrorMessage { get; }
+
+    public AuthenticationException(int statusCode, string errorMessage, List<string> errorMessages) : base(errorMessage)
+    {
+        StatusCode = statusCode;
+        ErrorMessage = errorMessage;
+    }
+
+    public AuthenticationException(string? message) : base(message)
+    {
+        ErrorMessage = message;
+    }
+
+    public List<string> ErrorMessages { get; }
+}
+
 
 public sealed class AuthService
 {
     private readonly AppDbContext _context;
     private readonly JwtProvider _jwtProvider;
+    private readonly IMapper _mapper;
 
-    public AuthService(JwtProvider jwtProvider, AppDbContext context)
+    public AuthService(AppDbContext context, IMapper mapper, JwtProvider jwtProvider)
     {
         _context = context;
+        _mapper = mapper;
         _jwtProvider = jwtProvider;
     }
 
     public void Register(RegisterDto request)
     {
-        #region Validation Check
         CheckValidation(request);
-        #endregion
 
-        #region UserName Or EMail Exists Control
         CheckUserNameAndEmailIsExists(request);
-        #endregion
 
-        #region Create Password
         byte[] passwordSalt, passwordHash;
         PasswordService.CreatePassword(request.Password, out passwordSalt, out passwordHash);
-        #endregion
 
-        #region Create User Object
-        AppUser user = CreateUser(request, passwordSalt, passwordHash);
-        #endregion
+        AppUser user = _mapper.Map<AppUser>(CreateUser(request, passwordSalt, passwordHash));
 
-        #region User Save To Database
         CreatingUserToDatabase(user);
-        #endregion
     }
 
-    public LoginResponseDto Login( LoginDto request)
+    public LoginResponseDto Login(LoginDto request)
     {
-        #region Validation Check
+
         CheckValidation(request);
-        #endregion
 
-        //immutable => bir defa set edilip bir daha değiştirilemeyen nesnelere denir
-        // immutable => "It refers to objects that are set once and cannot be changed thereafter."
-
-        #region Immutable One Set After Not Updated Object 
         AppUser? user = _context.Users.FirstOrDefault(p => p.UserName == request.UserNameOrEmail || p.Email == request.UserNameOrEmail);
-        #endregion
 
-        #region if User Is Null Business Logic
+        var validator = new LoginDtoValidator();
+        var result = validator.Validate(request);
+
+        UserIsNull(user, result);
+        CheckPasswordIsTrue(request, user);
+
+        string token = _jwtProvider.CreateToken(user, request.RememberMe);
+        return new LoginResponseDto(token, user.Id);
+    }
+
+    private void UserIsNull(AppUser? user, ValidationResult result)
+    {
         if (user is null)
         {
-            throw new ArgumentException("User Not Found");
+            List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
+
+            throw new AuthenticationException(422, "Kullanıcı bulunamadı veya geçersiz giriş bilgileri.", errorMessages);
+        }
+    }
+
+    private void CheckPasswordIsTrue(LoginDto request, AppUser? user)
+    {
+        var validator = new LoginDtoValidator();
+        var result = validator.Validate(request);
+
+        if (!result.IsValid)
+        {
+            List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
+
+            throw new AuthenticationException(422, "Validation failed", errorMessages);
         }
 
         var checkPasswordIsTrue = PasswordService.CheckPassword(user, request.Password);
+
         if (!checkPasswordIsTrue)
         {
-            throw new ArgumentException("password information is incorrect");
+            // Logging
+            //_logger.LogError("Invalid password");
+
+            throw new AuthenticationException(422, "Invalid password", new List<string> { "Invalid password" });
         }
-
-        return _jwtProvider.CreateToken(user, request.RememberMe);
-        #endregion
     }
-
 
     private void CreatingUserToDatabase(AppUser user)
     {
-        _context.Add(user);
+        _context.Users.Add(user);
         _context.SaveChanges();
     }
 
@@ -83,7 +117,9 @@ public sealed class AuthService
             FirstName = request.FirstName,
             LastName = request.LastName,
             Email = request.Email,
-            UserName = request.UserName
+            UserName = request.UserName,
+            PasswordSalt = passwordSalt,
+            PasswordHash = passwordHash
         };
     }
 
@@ -92,39 +128,13 @@ public sealed class AuthService
         var checkUserNameIsExsists = _context.Users.Any(p => p.UserName == request.UserName);
         if (checkUserNameIsExsists)
         {
-            throw new ArgumentException("Bu kullanıcı adı daha önce kullanılmış");
+            throw new AuthenticationException(422, "Bu kullanıcı adı daha önce kullanılmış", new List<string> { "Bu kullanıcı adı daha önce kullanılmış" });
         }
+
         var checkEmailIsExists = _context.Users.Any(p => p.Email == request.Email);
         if (checkEmailIsExists)
         {
-            throw new ArgumentException("Bu mail adresi daha önce kullanılmış");
-        }
-    }
-
-    private void CheckValidation<T>(T request)
-        where T : class
-    {
-        string validatorName = typeof(T).FullName + "Validator";
-        Type? validatorType = Type.GetType(validatorName);
-
-        if (validatorType == null)
-        {
-            throw new InvalidOperationException("Validator class not found for " + typeof(T).FullName);
-        }
-
-        var validatorInstance = Activator.CreateInstance(validatorType);
-        var validateMethod = validatorType.GetMethod("Validate");
-
-        if (validateMethod == null)
-        {
-            throw new InvalidOperationException("Validate method not found in " + validatorName);
-        }
-
-        var result = validateMethod.Invoke(validatorInstance, new object[] { request });
-
-        if (result is FluentValidation.Results.ValidationResult validationResult && !validationResult.IsValid)
-        {
-            throw new ArgumentException(validationResult.Errors[0].ErrorMessage);
+            throw new AuthenticationException(422, "Bu mail adresi daha önce kullanılmış", new List<string> { "Bu mail adresi daha önce kullanılmış" });
         }
     }
 
@@ -135,7 +145,8 @@ public sealed class AuthService
 
         if (!result.IsValid)
         {
-            throw new ArgumentException(result.Errors[0].ErrorMessage);
+            List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
+            throw new ArgumentException(string.Join(", ", errorMessages));
         }
     }
 
@@ -143,9 +154,11 @@ public sealed class AuthService
     {
         var validator = new LoginDtoValidator();
         var result = validator.Validate(request);
+
         if (!result.IsValid)
         {
-            throw new ArgumentException(result.Errors[0].ErrorMessage);
+            List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
+            throw new AuthenticationException(string.Join(", ", errorMessages));
         }
     }
 }
