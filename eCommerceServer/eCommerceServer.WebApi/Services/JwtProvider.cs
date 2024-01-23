@@ -9,6 +9,7 @@ namespace ECommerceServer.WebApi.Services;
 public sealed class JwtProvider
 {
     IConfiguration _configuration;
+
     public JwtProvider(IConfiguration configuration)
     {
         _configuration = configuration;

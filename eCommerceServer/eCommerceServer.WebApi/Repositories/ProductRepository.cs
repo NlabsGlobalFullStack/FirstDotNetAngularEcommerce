@@ -2,17 +2,15 @@
 using ECommerceServer.WebApi.DTOs;
 using ECommerceServer.WebApi.Models;
 
-namespace ECommerceServer.WebApi.Services;
-
-public sealed class ProductService
+namespace ECommerceServer.WebApi.Repositories;
+public class ProductRepository
 {
     private readonly AppDbContext _context;
 
-    public ProductService(AppDbContext context)
+    public ProductRepository(AppDbContext context)
     {
         _context = context;
     }
-
     public IEnumerable<Product> GetAll()
     {
         return _context.Products.OrderBy(p => p.CreatedDate).ToList();

@@ -1,3 +1,11 @@
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.csproj.AssemblyReference.cache
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.AssemblyInfoInputs.cache
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.AssemblyInfo.cs
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.csproj.CoreCompileInputs.cache
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.sourcelink.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\appsettings.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\ECommerceServer.WebApi.exe
@@ -36,6 +44,7 @@ C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECo
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Microsoft.SqlServer.Server.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -117,14 +126,6 @@ C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECo
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.csproj.AssemblyReference.cache
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.AssemblyInfoInputs.cache
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.AssemblyInfo.cs
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.csproj.CoreCompileInputs.cache
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.sourcelink.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\staticwebassets\msbuild.ECommerceServer.WebApi.Microsoft.AspNetCore.StaticWebAssets.props
@@ -139,4 +140,3 @@ C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECo
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.pdb
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ECommerceServer.WebApi.genruntimeconfig.cache
 C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\obj\Debug\net8.0\ref\ECommerceServer.WebApi.dll
-C:\Users\root\Projects\FullStack\FirstDotNetAngularEcommerce\ECommerceServer\ECommerceServer.WebApi\bin\Debug\net8.0\Newtonsoft.Json.dll

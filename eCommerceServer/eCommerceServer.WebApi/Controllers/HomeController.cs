@@ -1,5 +1,5 @@
 ﻿using ECommerceServer.WebApi.Models;
-using ECommerceServer.WebApi.Services;
+using ECommerceServer.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceServer.WebApi.Controllers;
@@ -7,11 +7,11 @@ namespace ECommerceServer.WebApi.Controllers;
 [ApiController]
 public class HomeController : ControllerBase
 {
-    private readonly ProductService _productService;
+    private readonly ProductRepository _productService;
 
-    public HomeController(ProductService productService)
+    public HomeController(ProductRepository productRepository)
     {
-        _productService = productService;
+        _productService = productRepository;
     }
 
     [HttpGet]

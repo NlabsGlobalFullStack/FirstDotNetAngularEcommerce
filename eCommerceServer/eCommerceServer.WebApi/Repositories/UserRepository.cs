@@ -1,45 +1,23 @@
-﻿using AutoMapper;
-using ECommerceServer.WebApi.Context;
+﻿using ECommerceServer.WebApi.Context;
 using ECommerceServer.WebApi.DTOs;
 using ECommerceServer.WebApi.Models;
+using ECommerceServer.WebApi.Services;
 using ECommerceServer.WebApi.Validators;
 using FluentValidation.Results;
+using System.Security.Authentication;
 
-namespace ECommerceServer.WebApi.Services;
+namespace ECommerceServer.WebApi.Repositories;
 
-public class AuthenticationException : Exception
-{
-    public int StatusCode { get; }
-    public string ErrorMessage { get; }
-
-    public AuthenticationException(int statusCode, string errorMessage, List<string> errorMessages) : base(errorMessage)
-    {
-        StatusCode = statusCode;
-        ErrorMessage = errorMessage;
-    }
-
-    public AuthenticationException(string? message) : base(message)
-    {
-        ErrorMessage = message;
-    }
-
-    public List<string> ErrorMessages { get; }
-}
-
-
-public sealed class AuthService
+public class UserRepository
 {
     private readonly AppDbContext _context;
     private readonly JwtProvider _jwtProvider;
-    private readonly IMapper _mapper;
 
-    public AuthService(AppDbContext context, IMapper mapper, JwtProvider jwtProvider)
+    public UserRepository(AppDbContext context, JwtProvider jwtProvider)
     {
         _context = context;
-        _mapper = mapper;
         _jwtProvider = jwtProvider;
     }
-
     public void Register(RegisterDto request)
     {
         CheckValidation(request);
@@ -49,8 +27,7 @@ public sealed class AuthService
         byte[] passwordSalt, passwordHash;
         PasswordService.CreatePassword(request.Password, out passwordSalt, out passwordHash);
 
-        AppUser user = _mapper.Map<AppUser>(CreateUser(request, passwordSalt, passwordHash));
-
+        AppUser user = CreateUser(request, passwordSalt, passwordHash);
         CreatingUserToDatabase(user);
     }
 
@@ -75,9 +52,8 @@ public sealed class AuthService
     {
         if (user is null)
         {
-            List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
 
-            throw new AuthenticationException(422, "Kullanıcı bulunamadı veya geçersiz giriş bilgileri.", errorMessages);
+            throw new AuthenticationException("Kullanıcı bulunamadı veya geçersiz giriş bilgileri.");
         }
     }
 
@@ -90,17 +66,15 @@ public sealed class AuthService
         {
             List<string> errorMessages = result.Errors.Select(s => s.ErrorMessage).ToList();
 
-            throw new AuthenticationException(422, "Validation failed", errorMessages);
+            throw new AuthenticationException("Validation failed");
         }
 
         var checkPasswordIsTrue = PasswordService.CheckPassword(user, request.Password);
 
         if (!checkPasswordIsTrue)
         {
-            // Logging
-            //_logger.LogError("Invalid password");
 
-            throw new AuthenticationException(422, "Invalid password", new List<string> { "Invalid password" });
+            throw new AuthenticationException("Invalid password");
         }
     }
 
@@ -128,13 +102,13 @@ public sealed class AuthService
         var checkUserNameIsExsists = _context.Users.Any(p => p.UserName == request.UserName);
         if (checkUserNameIsExsists)
         {
-            throw new AuthenticationException(422, "Bu kullanıcı adı daha önce kullanılmış", new List<string> { "Bu kullanıcı adı daha önce kullanılmış" });
+            throw new AuthenticationException("Bu kullanıcı adı daha önce kullanılmış");
         }
 
         var checkEmailIsExists = _context.Users.Any(p => p.Email == request.Email);
         if (checkEmailIsExists)
         {
-            throw new AuthenticationException(422, "Bu mail adresi daha önce kullanılmış", new List<string> { "Bu mail adresi daha önce kullanılmış" });
+            throw new AuthenticationException("Bu mail adresi daha önce kullanılmış");
         }
     }
 

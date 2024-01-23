@@ -2,15 +2,15 @@
 using ECommerceServer.WebApi.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerceServer.WebApi.Services;
+namespace ECommerceServer.WebApi.Repositories;
 
-public sealed class OrderService
+public class OrderRepository
 {
     private readonly AppDbContext _context;
 
-    public OrderService(AppDbContext context)
+    public OrderRepository(AppDbContext context)
     {
-        _context = context;
+        _context =context;
     }
 
     public IEnumerable<Order> GetAllByUserId(Guid userId)
@@ -20,7 +20,7 @@ public sealed class OrderService
             .Include(p => p.Details)!
             .ThenInclude(p => p.Product)
             .OrderByDescending(p => p.Id)
-            .ToList();
+        .ToList();
     }
 
     public void Add(Order order)

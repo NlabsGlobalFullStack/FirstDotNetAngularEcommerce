@@ -1,15 +1,16 @@
 ﻿using ECommerceServer.WebApi.DTOs;
-using ECommerceServer.WebApi.Services;
+using ECommerceServer.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Authentication;
 
 namespace ECommerceServer.WebApi.Controllers;
 [Route("api/[controller]/[action]")]
 [ApiController]
 public class AuthController : ControllerBase
 {
-    private readonly AuthService _authService;
+    private readonly UserRepository _authService;
 
-    public AuthController(AuthService authService)
+    public AuthController(UserRepository authService)
     {
         _authService = authService;
     }

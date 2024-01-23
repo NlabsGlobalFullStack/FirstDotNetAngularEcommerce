@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kJu8k+crT/G5mUuHZUje+DxkS8bMYrG3JdKtq3DesI6Y5pojCHMDokUX4BXYdIhbc4yj2NtCHeVmtijX135OpA==",
+  "dgSpecHash": "89pm36fl5OcHsSN8B5ReQPPdhH7ok+OcceohcZcladK8rvR+UA06b+JD2E76QN38qwyRqH1BHes3c9SNKc43zg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
+  "projectFilePath": "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\root\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\root\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

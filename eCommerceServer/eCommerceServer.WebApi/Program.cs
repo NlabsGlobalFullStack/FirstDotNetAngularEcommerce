@@ -1,4 +1,5 @@
 using ECommerceServer.WebApi.Context;
+using ECommerceServer.WebApi.Repositories;
 using ECommerceServer.WebApi.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -16,12 +17,10 @@ builder.Services.AddCors(corsService =>
 });
 
 builder.Services.AddScoped<JwtProvider>();
-
-builder.Services.AddScoped<AuthService>();
-builder.Services.AddScoped<OrderService>();
-builder.Services.AddScoped<ProductService>();
-builder.Services.AddScoped<ShoppingCartService>();
-builder.Services.AddScoped<TransactionService>();
+builder.Services.AddScoped<ShoppingCartRepository>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddScoped<ProductRepository>();
+builder.Services.AddScoped<UserRepository>();
 
 string? dbConnectionString = builder.Configuration.GetConnectionString("SqlServer");
 
