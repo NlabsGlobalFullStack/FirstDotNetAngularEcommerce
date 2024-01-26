@@ -12,10 +12,9 @@ public sealed class AppDbContext : DbContext
     public DbSet<AppUser> Users { get; set; }
     public DbSet<Product> Products { get; set; }
     public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+    public DbSet<Seller> Sellers { get; set; }
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderDetail> OrderDetails { get; set; }
-    public DbSet<Transaction> Transactions { get; set; }
-    public DbSet<TransactionDetail> TransactionDetails { get; set; }
 
 
 
@@ -31,8 +30,11 @@ public sealed class AppDbContext : DbContext
         List<Product> products = new();
         Product product1 = new()
         {
+            SellerId = Guid.NewGuid(),
             Name = "Apple",
             Slug = "apple",
+            Keywords = "apple, elma",
+            Description = "Güzel Elma",
             Price = 20,
             CoverImageUrl = "apple.png"
         };
@@ -40,6 +42,7 @@ public sealed class AppDbContext : DbContext
 
         Product product2 = new()
         {
+            SellerId = Guid.NewGuid(),
             Name = "Pear",
             Slug = "pear",
             Price = 30,
@@ -49,6 +52,7 @@ public sealed class AppDbContext : DbContext
 
         Product product3 = new()
         {
+            SellerId = Guid.NewGuid(),
             Name = "Watermelon",
             Slug = "watermelon",
             Price = 120,
@@ -58,6 +62,7 @@ public sealed class AppDbContext : DbContext
 
         Product product4 = new()
         {
+            SellerId = Guid.NewGuid(),
             Name = "Banana",
             Slug = "banana",
             Price = 50,

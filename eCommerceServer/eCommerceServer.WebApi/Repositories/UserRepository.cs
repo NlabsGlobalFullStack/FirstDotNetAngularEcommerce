@@ -18,6 +18,40 @@ public class UserRepository
         _context = context;
         _jwtProvider = jwtProvider;
     }
+    
+    //Dashboard
+    public List<FakeUsersDto> GetAll()
+    {
+        var result = _context.Users
+            .Where(u => u.IsAdmin == false)
+            .OrderByDescending(x => x.CreatedDate)
+            .ToList();
+
+        if (result.Count <= 0)
+        {
+            throw new ArgumentException("Sistemde kayıtlı kullanıcı bulunmuyor");
+        }
+        else
+        {
+            List<FakeUsersDto> results = new List<FakeUsersDto>();
+            foreach (var item in result)
+            {
+                var newResult = new FakeUsersDto(
+                    userId: item.Id,
+                    email: item.Email,
+                    firstName: item.FirstName,
+                    lastName: item.LastName,
+                    isSeller: item.IsSeller
+                );
+                results.Add(newResult);
+            }
+            return results;
+        }
+    }
+
+
+
+    //Authentication
     public void Register(RegisterDto request)
     {
         CheckValidation(request);

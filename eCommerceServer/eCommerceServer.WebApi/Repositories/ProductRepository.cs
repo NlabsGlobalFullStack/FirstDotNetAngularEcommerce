@@ -11,9 +11,43 @@ public class ProductRepository
     {
         _context = context;
     }
-    public IEnumerable<Product> GetAll()
+    //Dashboard & Home
+    public List<Product> GetAll()
     {
-        return _context.Products.OrderBy(p => p.CreatedDate).ToList();
+        var result = _context.Products.OrderByDescending(p => p.CreatedDate).ToList();
+        if (result is null)
+        {
+            throw new ArgumentException("Sistemde Kayıtlı ürün bulunamadı!");
+        }
+        else
+        {
+            return result;
+        }
+    }
+
+    //Seller
+    public List<Product>? GetByUserId(Guid userId)
+    {
+        var isSeller = _context.Users.Any(u => u.Id == userId && u.IsSeller == true);
+        var user = _context.Users?.Where(u => u.Id == userId).FirstOrDefault();
+        var seller = _context.Sellers?.Where(s => s.UserId == user.Id).FirstOrDefault();
+        var result = _context.Products?.Where(p => p.SellerId == seller.Id).ToList();       
+
+        if (isSeller)
+        {
+            if (result is null)
+            {
+                throw new ArgumentException("Henüz sisteme ürün kaydetmediniz!");
+            }
+            else
+            {
+                return result;
+            }
+        }
+        else
+        {
+            throw new ArgumentException("Lütfen Satıcı Olmak İçin Talep Gönderiniz!");
+        }
     }
 
     private string GenerateSlug(string input)
@@ -29,13 +63,16 @@ public class ProductRepository
 
         Product product = new Product()
         {
-            SellerId = request.UserId,
+            SellerId = request.SellerId,
             Name = request.Name,
             Slug = slug,
+            Keywords = request.Keywords,
             Description = request.Description,
             Price = request.Price,
             CoverImageUrl = request.CoverImageUrl
         };
+        _context.Products.Add(product);
+        _context.SaveChanges();
 
         return product;
     }
@@ -46,11 +83,12 @@ public class ProductRepository
 
         var product = _context.Products.Find(request.Id);
 
-        if (product != null)
+        if (product is null)
         {
-            product.SellerId = request.UserId;
+            product.SellerId = request.SellerId;
             product.Name = request.Name;
             product.Slug = slug;
+            product.Keywords = request.Keywords;
             product.Description = request.Description;
             product.Price = request.Price;
             product.CoverImageUrl = request.CoverImageUrl;
@@ -61,9 +99,11 @@ public class ProductRepository
 
     public void Add(AddProductDto request)
     {
-        Product product = CreateProductFromRequest(request);
-        _context.Products.Add(product);
-        _context.SaveChanges();
+        var result = _context.Sellers.Any(u => u.UserId == request.SellerId && u.IsActive == true);
+        if (result)
+        {
+            Product product = CreateProductFromRequest(request);
+        }
     }
 
     public bool IsNameExists(string name)
@@ -73,11 +113,15 @@ public class ProductRepository
 
     public void Update(UpdateProductDto request)
     {
-        Product product = UpdateProductFromRequest(request);
-
-        if (product != null)
+        var result = _context.Users.Any(u => u.Id == request.SellerId && u.IsSeller == true);
+        if (result)
         {
-            _context.SaveChanges();
+            Product product = UpdateProductFromRequest(request);
+
+            if (product != null)
+            {
+                _context.SaveChanges();
+            }
         }
     }
 }

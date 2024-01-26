@@ -8,24 +8,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ECommerceServer.WebApi.Migrations
 {
     /// <inheritdoc />
-    public partial class m : Migration
+    public partial class mg1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Transactions",
+                name: "Sellers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BuyerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    SellerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransactionType = table.Column<byte>(type: "tinyint", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                    table.PrimaryKey("PK_Sellers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -56,6 +56,7 @@ namespace ECommerceServer.WebApi.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OrderStatus = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExpectedArrival = table.Column<DateTime>(type: "datetime2", nullable: true),
                     CargoCompany = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CargoTrackingNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -80,8 +81,8 @@ namespace ECommerceServer.WebApi.Migrations
                     SellerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Keywords = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Keywords = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<decimal>(type: "money", nullable: false),
                     CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AppUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
@@ -103,6 +104,7 @@ namespace ECommerceServer.WebApi.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SellerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
@@ -152,42 +154,15 @@ namespace ECommerceServer.WebApi.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TransactionDetails",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransactionDetails", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TransactionDetails_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TransactionDetails_Transactions_TransactionId",
-                        column: x => x.TransactionId,
-                        principalTable: "Transactions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.InsertData(
                 table: "Products",
                 columns: new[] { "Id", "AppUserId", "CoverImageUrl", "CreatedDate", "Description", "Keywords", "Name", "Price", "SellerId", "Slug" },
                 values: new object[,]
                 {
-                    { new Guid("6a68e681-0044-4419-a8b1-a91575c242c0"), null, "apple.png", new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1585), "", "", "Apple", 20m, new Guid("00000000-0000-0000-0000-000000000000"), "apple" },
-                    { new Guid("7bb58352-81e4-4b88-bb62-ef75f563c038"), null, "pear.png", new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1620), "", "", "Pear", 30m, new Guid("00000000-0000-0000-0000-000000000000"), "pear" },
-                    { new Guid("c2169225-d2af-454c-a493-844629f95cff"), null, "watermelon.png", new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1624), "", "", "Watermelon", 120m, new Guid("00000000-0000-0000-0000-000000000000"), "watermelon" },
-                    { new Guid("d4b05ba1-8ba0-4048-96cb-251d1a3279f9"), null, "banana.png", new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1628), "", "", "Banana", 50m, new Guid("00000000-0000-0000-0000-000000000000"), "banana" }
+                    { new Guid("12963086-b5ca-43fd-9cd6-13e895035932"), null, "banana.png", new DateTime(2024, 1, 25, 20, 24, 5, 279, DateTimeKind.Local).AddTicks(6207), "", "", "Banana", 50m, new Guid("26c4426a-f1e7-4bbf-aa31-b2a60f8fc71e"), "banana" },
+                    { new Guid("5bb42ee2-03d3-441f-b070-802cb12b30ae"), null, "apple.png", new DateTime(2024, 1, 25, 20, 24, 5, 279, DateTimeKind.Local).AddTicks(6130), "Güzel Elma", "apple, elma", "Apple", 20m, new Guid("399c67cc-83ce-48b6-b208-4c40ec4c59d8"), "apple" },
+                    { new Guid("b078ec9f-987a-47fe-80b7-620b2dfb1e7c"), null, "watermelon.png", new DateTime(2024, 1, 25, 20, 24, 5, 279, DateTimeKind.Local).AddTicks(6159), "", "", "Watermelon", 120m, new Guid("a73d2978-70f6-4250-925b-cc9b1d404ccf"), "watermelon" },
+                    { new Guid("b2f12fbd-ba8b-4373-b7a4-0f9c2f484303"), null, "pear.png", new DateTime(2024, 1, 25, 20, 24, 5, 279, DateTimeKind.Local).AddTicks(6155), "", "", "Pear", 30m, new Guid("0d9b8878-3cee-4645-b43d-d27f23452f8b"), "pear" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -227,16 +202,6 @@ namespace ECommerceServer.WebApi.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TransactionDetails_ProductId",
-                table: "TransactionDetails",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TransactionDetails_TransactionId",
-                table: "TransactionDetails",
-                column: "TransactionId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -256,19 +221,16 @@ namespace ECommerceServer.WebApi.Migrations
                 name: "OrderDetails");
 
             migrationBuilder.DropTable(
-                name: "ShoppingCarts");
+                name: "Sellers");
 
             migrationBuilder.DropTable(
-                name: "TransactionDetails");
+                name: "ShoppingCarts");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Transactions");
 
             migrationBuilder.DropTable(
                 name: "Users");

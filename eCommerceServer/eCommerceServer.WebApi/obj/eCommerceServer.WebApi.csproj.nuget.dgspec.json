@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj": {}
+    "D:\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj": {
+    "D:\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
+        "projectUniqueName": "D:\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
         "projectName": "ECommerceServer.WebApi",
-        "projectPath": "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
+        "projectPath": "D:\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\ECommerceServer.WebApi.csproj",
         "packagesPath": "C:\\Users\\root\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\root\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\eCommerceServer\\ECommerceServer.WebApi\\obj\\",
+        "outputPath": "D:\\Projects\\FullStack\\FirstDotNetAngularEcommerce\\ECommerceServer\\ECommerceServer.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

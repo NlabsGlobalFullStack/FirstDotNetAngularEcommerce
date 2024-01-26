@@ -15,3 +15,15 @@ public sealed record RegisterDto(
 public sealed record LoginResponseDto(
     string AccessToken,
     Guid UserId);
+
+public sealed record AddSellerDto(
+    Guid UserId,
+    string Title,
+    string Description);
+
+public sealed record FakeUsersDto(
+    Guid userId,
+    string firstName,
+    string lastName,
+    string email,
+    bool isSeller);

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceServer.WebApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240121171232_m")]
-    partial class m
+    [Migration("20240126184342_mg2")]
+    partial class mg2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,6 +93,9 @@ namespace ECommerceServer.WebApi.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("ExpectedArrival")
                         .HasColumnType("datetime2");
 
@@ -134,6 +137,9 @@ namespace ECommerceServer.WebApi.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("SellerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
@@ -160,11 +166,9 @@ namespace ECommerceServer.WebApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Keywords")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -193,52 +197,80 @@ namespace ECommerceServer.WebApi.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("6a68e681-0044-4419-a8b1-a91575c242c0"),
+                            Id = new Guid("82045cb2-9e6e-43e6-b1f7-53b4c690ee9d"),
                             CoverImageUrl = "apple.png",
-                            CreatedDate = new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1585),
-                            Description = "",
-                            Keywords = "",
+                            CreatedDate = new DateTime(2024, 1, 26, 21, 43, 38, 517, DateTimeKind.Local).AddTicks(2235),
+                            Description = "Güzel Elma",
+                            Keywords = "apple, elma",
                             Name = "Apple",
                             Price = 20m,
-                            SellerId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            SellerId = new Guid("84c4b90e-6903-48be-8c03-f3e681a0d2c7"),
                             Slug = "apple"
                         },
                         new
                         {
-                            Id = new Guid("7bb58352-81e4-4b88-bb62-ef75f563c038"),
+                            Id = new Guid("0e8b67ef-3c96-4470-a1f3-bf4014b7ae96"),
                             CoverImageUrl = "pear.png",
-                            CreatedDate = new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1620),
+                            CreatedDate = new DateTime(2024, 1, 26, 21, 43, 38, 517, DateTimeKind.Local).AddTicks(2309),
                             Description = "",
                             Keywords = "",
                             Name = "Pear",
                             Price = 30m,
-                            SellerId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            SellerId = new Guid("abaea843-79e3-4c87-b6d7-baf5131823a5"),
                             Slug = "pear"
                         },
                         new
                         {
-                            Id = new Guid("c2169225-d2af-454c-a493-844629f95cff"),
+                            Id = new Guid("f53b96bd-328d-41a4-9b72-7c3ac425c6c6"),
                             CoverImageUrl = "watermelon.png",
-                            CreatedDate = new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1624),
+                            CreatedDate = new DateTime(2024, 1, 26, 21, 43, 38, 517, DateTimeKind.Local).AddTicks(2313),
                             Description = "",
                             Keywords = "",
                             Name = "Watermelon",
                             Price = 120m,
-                            SellerId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            SellerId = new Guid("abd48fe0-270c-4c6c-ae67-f6deb30e35b5"),
                             Slug = "watermelon"
                         },
                         new
                         {
-                            Id = new Guid("d4b05ba1-8ba0-4048-96cb-251d1a3279f9"),
+                            Id = new Guid("be07d532-eb52-4149-81cb-1d7ff21300f7"),
                             CoverImageUrl = "banana.png",
-                            CreatedDate = new DateTime(2024, 1, 21, 20, 12, 32, 211, DateTimeKind.Local).AddTicks(1628),
+                            CreatedDate = new DateTime(2024, 1, 26, 21, 43, 38, 517, DateTimeKind.Local).AddTicks(2316),
                             Description = "",
                             Keywords = "",
                             Name = "Banana",
                             Price = 50m,
-                            SellerId = new Guid("00000000-0000-0000-0000-000000000000"),
+                            SellerId = new Guid("f4d52010-ce81-49a0-83f7-6fc4946731d3"),
                             Slug = "banana"
                         });
+                });
+
+            modelBuilder.Entity("ECommerceServer.WebApi.Models.Seller", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("ECommerceServer.WebApi.Models.ShoppingCart", b =>
@@ -266,56 +298,6 @@ namespace ECommerceServer.WebApi.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ShoppingCarts");
-                });
-
-            modelBuilder.Entity("ECommerceServer.WebApi.Models.Transaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BuyerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("SellerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte>("TransactionType")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Transactions");
-                });
-
-            modelBuilder.Entity("ECommerceServer.WebApi.Models.TransactionDetail", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("TransactionId");
-
-                    b.ToTable("TransactionDetails");
                 });
 
             modelBuilder.Entity("ECommerceServer.WebApi.Models.Order", b =>
@@ -368,23 +350,6 @@ namespace ECommerceServer.WebApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ECommerceServer.WebApi.Models.TransactionDetail", b =>
-                {
-                    b.HasOne("ECommerceServer.WebApi.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ECommerceServer.WebApi.Models.Transaction", null)
-                        .WithMany("Details")
-                        .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("ECommerceServer.WebApi.Models.AppUser", b =>
                 {
                     b.Navigation("Orders");
@@ -393,11 +358,6 @@ namespace ECommerceServer.WebApi.Migrations
                 });
 
             modelBuilder.Entity("ECommerceServer.WebApi.Models.Order", b =>
-                {
-                    b.Navigation("Details");
-                });
-
-            modelBuilder.Entity("ECommerceServer.WebApi.Models.Transaction", b =>
                 {
                     b.Navigation("Details");
                 });

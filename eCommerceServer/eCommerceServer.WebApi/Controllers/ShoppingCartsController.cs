@@ -113,6 +113,7 @@ public sealed class ShoppingCartsController : ControllerBase
             OrderDetail orderDetail = new()
             {
                 Price = cart.Product!.Price,
+                SellerId = cart.Product.SellerId,
                 Quantity = cart.Quantity,
                 ProductId = cart.ProductId,
             };
