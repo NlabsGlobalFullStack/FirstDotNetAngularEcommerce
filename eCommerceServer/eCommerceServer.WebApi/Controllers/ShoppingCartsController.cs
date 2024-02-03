@@ -9,13 +9,10 @@ namespace ECommerceServer.WebApi.Controllers;
 [Authorize(AuthenticationSchemes = "Bearer")]
 public sealed class ShoppingCartsController : ControllerBase
 {
-    private readonly ShoppingCartRepository _shoppingCartService;
-
-    private readonly OrderRepository _orderService;
-    public ShoppingCartsController(ShoppingCartRepository shoppingCartService, OrderRepository orderService)
+    private readonly ShoppingCartRepository _shoppingCartRepository;
+    public ShoppingCartsController(ShoppingCartRepository shoppingCartRepository)
     {
-        _shoppingCartService = shoppingCartService;
-        _orderService = orderService;
+        _shoppingCartRepository = shoppingCartRepository;
     }
 
 
@@ -25,7 +22,7 @@ public sealed class ShoppingCartsController : ControllerBase
         string userIdString = User.Claims.Single(s => s.Type == "UserId").Value;
         Guid userId = Guid.Parse(userIdString);
 
-        IEnumerable<ShoppingCart> shoppingCarts = _shoppingCartService.GetAllByUserId(userId);
+        IEnumerable<ShoppingCart> shoppingCarts = _shoppingCartRepository.GetAllByUserId(userId);
         return Ok(shoppingCarts);
     }
 
@@ -35,23 +32,7 @@ public sealed class ShoppingCartsController : ControllerBase
         string userIdString = User.Claims.Single(s => s.Type == "UserId").Value;
         Guid userId = Guid.Parse(userIdString);
 
-        ShoppingCart? shoppingCart = _shoppingCartService.GetByUserIdAndProductId(userId, productId);
-
-        if (shoppingCart is null)
-        {
-            shoppingCart = new() 
-            {
-                UserId = userId,
-                ProductId = productId,
-                Quantity = 1
-            };
-            _shoppingCartService.Add(shoppingCart);
-        }
-        else
-        {
-            shoppingCart.Quantity++;
-            _shoppingCartService.Update(shoppingCart);
-        }
+        var result = _shoppingCartRepository.Increment(userId, productId);        
         return NoContent();
     }
 
@@ -61,71 +42,34 @@ public sealed class ShoppingCartsController : ControllerBase
         string userIdString = User.Claims.Single(s => s.Type == "UserId").Value;
         Guid userId = Guid.Parse(userIdString);
 
-        ShoppingCart? shoppingCart = _shoppingCartService.GetByUserIdAndProductId(userId, productId);
-        if (shoppingCart is not null)
-        {
-            shoppingCart.Quantity--;
-
-            if (shoppingCart.Quantity == 0)
-            {
-                _shoppingCartService.Remove(shoppingCart);
-            }
-            else
-            {
-                _shoppingCartService.Update(shoppingCart);
-            }
-        }
-
+        var result = _shoppingCartRepository.Decrement(userId, productId);
         return NoContent();
     }
 
     [HttpGet]
     public IActionResult RemoveById(Guid id)
     {
-        ShoppingCart? shoppingCart = _shoppingCartService.GetById(id);
+        var shoppingCart = _shoppingCartRepository.GetById(id);
+
         if (shoppingCart is not null)
         {
-            _shoppingCartService.Remove(shoppingCart);
-        }
+            var result = _shoppingCartRepository.Delete(id);
 
+            if (!result.Success)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+        }
         return NoContent();
     }
 
     [HttpGet]
-    public IActionResult Pay()
+    public IActionResult Payment()
     {
         string userIdString = User.Claims.Single(s => s.Type == "UserId").Value;
         Guid userId = Guid.Parse(userIdString);
 
-        IEnumerable<ShoppingCart> carts = _shoppingCartService.GetAllByUserId(userId);
-
-        Order order = new()
-        {
-            Number = Guid.NewGuid().ToString(),
-            Date = DateTime.Now,
-            UserId = userId
-        };
-
-        List<OrderDetail> details = new List<OrderDetail>();
-
-        foreach (var cart in carts)
-        {
-            OrderDetail orderDetail = new()
-            {
-                Price = cart.Product!.Price,
-                SellerId = cart.Product.SellerId,
-                Quantity = cart.Quantity,
-                ProductId = cart.ProductId,
-            };
-
-            details.Add(orderDetail);
-        }
-
-        order.Details = details;
-
-        _orderService.Add(order);
-        _shoppingCartService.RemoveRange(carts);
-
+        var result = _shoppingCartRepository.Payment(userId);
         return NoContent();
     }
 }

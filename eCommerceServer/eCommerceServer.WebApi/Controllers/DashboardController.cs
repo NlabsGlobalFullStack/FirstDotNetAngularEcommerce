@@ -1,5 +1,4 @@
-﻿using ECommerceServer.WebApi.DTOs;
-using ECommerceServer.WebApi.Repositories;
+﻿using ECommerceServer.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,59 +22,37 @@ public class DashboardController : ControllerBase
     }
 
     [HttpGet]
-    public IActionResult GetProducts(Guid? userId)
+    public IActionResult GetProducts()
     {
         var result = _productRepository.GetAll();
-        return Ok(result);
+        return Ok(new { statusCode = 200, count = result.Count, products = result });
     }
 
     [HttpGet]
     public IActionResult GetOrders()
     {
         var result = _orderRepository.GetAll();
-        
-        return Ok(result);
+        return Ok(new { statusCode = 200, count = result.Count, orders = result });
     }
 
     [HttpGet]
     public IActionResult GetUsers()
     {
-        try
-        {
-            var result = _userRepository.GetAll();
-            return Ok(new { statusCode = 200, count = result.Count, users = result });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _userRepository.GetAll();
+        return Ok(new { statusCode = 200, count = result.Count, users = result });
     }
 
     [HttpGet]
     public IActionResult GetAddedSellerRequests()
     {
-        try
-        {
-            var result = _sellerRepository.GetAddedSellerRequest();
-            return Ok(new { statusCode = 200, count = result.Count, sellers = result });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _sellerRepository.GetAddedSellerRequest();
+        return Ok(new { statusCode = 200, count = result.Count, sellers = result });
     }
 
     [HttpPost]
     public IActionResult AddSeller(Guid userId)
     {
-        try
-        {
-            var result = _sellerRepository.SellerActive(userId);
-            return Ok(new { statusCode = 200, seller = result });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _sellerRepository.SellerActive(userId);
+        return Ok(new { statusCode = 200, seller = result });
     }
 }

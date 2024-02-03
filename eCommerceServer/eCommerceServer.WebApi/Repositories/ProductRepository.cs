@@ -25,6 +25,38 @@ public class ProductRepository
         }
     }
 
+    //Home Is Login
+    public List<Product> IsLoginGetAll(Guid userId)
+    {
+        var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+        if (user != null)
+        {
+            var seller = _context.Sellers.FirstOrDefault(s => s.UserId == user.Id);
+            if (seller is not null)
+            {
+                var result = _context.Products
+                    .Where(p => p.SellerId != seller.Id)
+                    .OrderByDescending(p => p.CreatedDate)
+                    .ToList();
+                return result;
+            }
+            else
+            {
+                var result = _context.Products
+                    .OrderByDescending(p => p.CreatedDate)
+                    .ToList();
+                return result;
+            }
+        }
+        else
+        {
+            // Kullanıcı bulunamadı durumu
+            throw new ArgumentException("Kullanıcı bulunamadı!");
+        }
+    }
+
+
+
     //Seller
     public List<Product>? GetByUserId(Guid userId)
     {

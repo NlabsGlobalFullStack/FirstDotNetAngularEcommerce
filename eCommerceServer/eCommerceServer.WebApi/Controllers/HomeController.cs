@@ -1,5 +1,4 @@
 ﻿using ECommerceServer.WebApi.DTOs;
-using ECommerceServer.WebApi.Models;
 using ECommerceServer.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,22 +20,23 @@ public class HomeController : ControllerBase
     [HttpGet]
     public IActionResult GetProducts()
     {
-        IEnumerable<Product> products = _productService.GetAll();
-        return Ok(products);
+        var result = _productService.GetAll();
+        return Ok(new { statusCode = 200, count = result.Count, products = result });
+    }
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet]
+    public IActionResult IsLoginGetProducts(Guid userId)
+    {
+        var result = _productService.IsLoginGetAll(userId);
+        return Ok(new { statusCode = 200, count = result.Count, products = result });
     }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost]
-    public IActionResult AddSeller(AddSellerDto request)
+    public IActionResult MeAddSellerList(AddSellerDto request)
     {
-        try
-        {
-            var result = _sellerRepository.Add(request);
-            return Ok(new { statusCode = 200, message = result.Title });
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _sellerRepository.Add(request);
+        return Ok(new { statusCode = 200, message = result.Title });
     }
 }

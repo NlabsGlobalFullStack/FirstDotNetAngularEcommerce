@@ -21,43 +21,22 @@ public class SellersController : ControllerBase
     [HttpGet]
     public IActionResult GetAllProducts(Guid userId)
     {
-        try
-        {
-            var result = _productRepository.GetByUserId(userId);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _productRepository.GetByUserId(userId);
+        return Ok(new { statusCode = 200, count = result.Count, products = result });
     }
 
     [HttpGet]
     public IActionResult GetAllOrders(Guid userId)
     {
-        try
-        {
-            var result = _orderRepository.GetAllBySellerId(userId);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _orderRepository.GetAllBySellerId(userId);
+        return Ok(new { statusCode = 200, count = result.Count, products = result });
     }
 
     [HttpGet]
     public IActionResult GetOrder(Guid Id)
     {
-        try
-        {
-            var result = _orderRepository.GetOrderDetail(Id);
-            return Ok(result);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var result = _orderRepository.GetOrderDetail(Id);
+        return Ok(result);
     }
 
 
